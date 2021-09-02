@@ -1,0 +1,24 @@
+.todoItem {
+    /* main */
+    background-color: rgb(76, 216, 134);
+    width: 60%;
+    height: 80px;
+    padding: 5px 10px;
+    margin: 5px 5px;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+  }
+  
+  .div_title_des{
+     height: 80%;
+     background-color: red;
+  }
+
+  .todoTitle{
+    /* justify-self: flex-start; */
+    /* align-self: center; */
+  }
+  .todoDescription {
+  }
+  
