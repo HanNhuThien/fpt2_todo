@@ -1,0 +1,14 @@
+.customButton{
+    background-color: orchid;
+    font-size: medium;
+    font-weight: bold;
+    width: 70px;
+    height: 40px;
+    margin: 2px;
+    padding: 5px;
+
+}
+.customButton:hover{
+    background-color: purple;
+    color: white;
+}
