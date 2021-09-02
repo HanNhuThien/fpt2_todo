@@ -1,24 +1,96 @@
 .todoItem {
-    /* main */
-    background-color: rgb(76, 216, 134);
-    width: 60%;
-    height: 80px;
-    padding: 5px 10px;
-    margin: 5px 5px;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: row;
-  }
-  
-  .div_title_des{
-     height: 80%;
-     background-color: red;
-  }
+  /* main */
+  display: flex;
+  width: 60%;
+  height: 80px;
+  padding: 5px 10px;
+  margin: 5px 5px;
+  /* align-items: center; */
+  /* justify-items: flex-end; */
+  justify-content: space-between;
+  flex-direction: row;
+}
+.todoItem_display {
+  background-color: rgb(76, 216, 134);
+}
+.todoItem_edit {
+  background-color: plum;
+}
 
-  .todoTitle{
-    /* justify-self: flex-start; */
-    /* align-self: center; */
-  }
-  .todoDescription {
-  }
+/* ----- title - description ----- */
+.div_title_des {
+  width: 70%;
+  background-color: orange;
+  justify-self: flex-start;
+  display:flex;
+  flex-flow: column;
+  /* justify-content: center; */
+  /* align-content: flex-end; */
+  align-items: flex-start;
+  /* align-items: center; */
   
+  /* align-content: center; */
+}
+
+/* mode: display */
+.todoTitle_display {
+  justify-self: flex-start;
+  height: 65%;
+  font-weight: bolder;
+  font-size: 25px;
+  /* justify-self: flex-start; */
+  /* align-self: center; */
+}
+.todoDescription_display {
+  justify-self: flex-end;
+  height: 35%;
+  font-size: 20px;
+}
+
+
+/* mode: edit */
+.todoTitle_edit {
+  justify-self: flex-start;
+  height: 30%;
+  width: 80%;
+  margin: 4px;
+  padding: 2px;
+
+  /* justify-self: flex-start; */
+  /* align-self: center; */
+}
+.todoDescription_edit {
+  justify-self: flex-start;
+  height: 30%;
+  width: 80%;
+  margin: 4px;
+  padding: 2px;
+}
+
+.checkbox {
+  /* height: 80%; */
+  /* -webkit-appearance:none; */
+  height: 30px;
+  width: 30px;
+  /* width: 10%; */
+  /* width: 20px; */
+  align-self: center;
+}
+
+.div_buttons {
+  width: 20%;
+  background-color: white;
+  display: flex;
+  flex-flow: column;
+  /* justify-content: center; */
+  /* align-content: flex-end; */
+  align-items: center;
+  /* align-items: center; */
+}
+.button_delete, .button_cancel{
+  background-color: red;
+}
+
+.button_cancel{
+  /* background-color: red; */
+}
