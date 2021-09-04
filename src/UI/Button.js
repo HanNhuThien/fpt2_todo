@@ -1,13 +1,14 @@
 import cz from "./Button.module.css";
 
-const Button = (props) => {
+const Button = ({ children, className, onClick, type }) => {
   return (
     <button
-      className={`${cz.customButton} ${props.className}`}
-      onClick={props.onClick}
-      type={props.type || 'button'}
+      // className={`${cz.customButton} ${className}`}
+      className={`${cz.customButton} ${className}`}
+      onClick={onClick}
+      type={type || "button"}
     >
-      {props.children}
+      {children}
     </button>
   );
 };

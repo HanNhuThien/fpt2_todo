@@ -1,15 +1,24 @@
 import cz from "./Input.module.css";
 
-const Input = (props) => {
+const Input = ({
+  className,
+  onChange,
+  type,
+  placeholder,
+  value,
+  defaultChecked,
+  children,
+}) => {
   return (
     <input
-      className={`${cz.customInput} ${props.className}`}
-      onChange={props.onChange}
-      type={props.type}
-      placeholder={props.placeholder}
-      value = {props.value}
+      className={`${cz.customInput} ${className}`}
+      onChange={onChange}
+      type={type}
+      placeholder={placeholder}
+      value = {value}
+      defaultChecked={defaultChecked}
     >
-      {props.children}
+      {children}
     </input>
   );
 };

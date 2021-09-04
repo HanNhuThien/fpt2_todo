@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 import cz from "./TodoItem.module.css";
@@ -11,7 +11,13 @@ const TodoItem = (props) => {
   const [isDone, setIsDone] = useState(props.todo.isDone);
 
   const onCheckboxChangeHandler = (e) => {
-    //setIsDone(e.checked);
+    setIsDone(e.target.checked);
+    props.onUpdateItem({
+      id: props.todo.id,
+      title: title,
+      description: description,
+      isDone: e.target.checked,
+    });
   };
   const onClickEdit = (e) => {
     setIsEditing((prev) => !prev);
@@ -40,6 +46,7 @@ const TodoItem = (props) => {
     // ref_title.current.value = e.target.value;
   };
   const onChangeDescription = (e) => {
+    setDescription(e.target.value);
     // setIsDone(e.checked);
   };
 
@@ -63,16 +70,16 @@ const TodoItem = (props) => {
               className={cz.todoDescription_edit}
               placeholder="input description"
               value={description}
-              onChange={onCheckboxChangeHandler}
+              onChange={onChangeDescription}
             ></Input>
           </div>
           {/* 3. checkbox isDone */}
           <Input
             className={cz.checkbox}
             type="checkbox"
-            checked={isDone}
+            defaultChecked={isDone}
             onChange={onCheckboxChangeHandler}
-          ></Input>
+          />
 
           {/* 4. button save/ cancel save */}
           <div className={`${cz.div_buttons} ${cz.div_buttons_edit}`}>
@@ -85,7 +92,13 @@ const TodoItem = (props) => {
           </div>
         </form>
       ) : (
-        <div className={`${cz.todoItem} ${cz.todoItem_display}`}>
+        <div
+          className={
+            isDone
+              ? `${cz.todoItem} ${cz.todoItem_isDone}`
+              : `${cz.todoItem} ${cz.todoItem_display}`
+          }
+        >
           {/* ----- mode : display (not editing) -------------- */}
 
           <div className={cz.div_title_des}>
@@ -100,9 +113,9 @@ const TodoItem = (props) => {
           <Input
             className={cz.checkbox}
             type="checkbox"
-            checked={isDone}
+            defaultChecked={isDone}
             onChange={onCheckboxChangeHandler}
-          ></Input>
+          />
 
           {/* 4. button edit / delete*/}
           <div className={`${cz.div_buttons} ${cz.div_buttons_display}`}>
