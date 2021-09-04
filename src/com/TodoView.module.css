@@ -1,0 +1,12 @@
+.todoView{
+    /* background-color: pink; */
+}
+
+.button_addTodo {
+    width: 120px;
+    background-color: green;
+}
+
+.button_addTodo:hover{
+    background-color: red;
+}
