@@ -1,3 +1,30 @@
 .addTodo{
-    background-color: seagreen;
+    background-color: orange;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    justify-items: center;
+    align-items: center;
+    width: 40%;
+    margin: 5px auto;
+    height: 280px;
+}
+
+.div_input{
+    display: flex;
+    flex-direction: column;
+}
+.div_button{
+    margin: 20px 15px;
+}
+.button_cancel{
+    background-color: red;
+}
+
+.button{
+    padding: 5px;
+    margin: 3px 15px;
+}
+
+.input_addTodo{
 }

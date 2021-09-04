@@ -126,20 +126,22 @@ function TodoView() {
     addTodoFn(newTodo);
   };
 
+  const P_NO_ITEM_FOUND = <p>No item found</p>;
+
   return (
     <div className={cz.todoView}>
-      <Input placeholder="search" onChange={onSearch} />
+      <Input placeholder="search by title / description" onChange={onSearch} />
 
       {!isAddingTodo && (
-        <Button
-          className={cz.button_addTodo}
-          onClick={onClickAddTodo}
-        >
+        <Button className={cz.button_addTodo} onClick={onClickAddTodo}>
           Add todo
         </Button>
       )}
 
       {isAddingTodo && <AddTodo onAddTodo={onAddTodo} />}
+
+      {isFiltering && filterTodoList.length === 0 && P_NO_ITEM_FOUND}
+      {!isFiltering && todoList.length === 0 && P_NO_ITEM_FOUND}
 
       <TodoList
         todoList={isFiltering ? filterTodoList : todoList}

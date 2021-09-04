@@ -33,33 +33,31 @@ const AddTodo = (props) => {
   };
 
   return (
-    <form
-      className={`${cz.addTodo}`}
-      onSubmit={onFormSubmit}
-    >
+    <form className={`${cz.addTodo}`} onSubmit={onFormSubmit}>
       {/* 1. title */}
-      <title>Add todo</title>
-      <Input
-        className={cz.todoTitle}
-        placeholder="input title"
-        onChange={onChangeTitle}
-        value={title}
-      ></Input>
+      <h3>Add todo</h3>
+      <div className={`${cz.div_input}`}>
+        <Input
+          className={`${cz.input_addTodo} ${cz.todoTitle}`} 
+          placeholder="input title"
+          onChange={onChangeTitle}
+          value={title}
+        ></Input>
 
-      {/* 2. description */}
-      <Input
-        className={cz.todoDescription}
-        placeholder="input description"
-        onChange={onChangeDescription}
-        value={description}
-      ></Input>
-
+        {/* 2. description */}
+        <Input
+          className={`${cz.input_addTodo} ${cz.todoDescription}`} 
+          placeholder="input description"
+          onChange={onChangeDescription}
+          value={description}
+        ></Input>
+      </div>
       {/* 3. button save/ cancel save */}
-      <div className={`${cz.div_buttons} ${cz.div_buttons_edit}`}>
-        <Button className={cz.button_save} type="submit">
+      <div className={`${cz.div_button}`}>
+        <Button className={`${cz.button} ${cz.button_save}`} type="submit">
           Save
         </Button>
-        <Button className={cz.button_cancel} onClick={onClickCancel}>
+        <Button className={`${cz.button} ${cz.button_cancel}`} onClick={onClickCancel}>
           Cancel
         </Button>
       </div>
