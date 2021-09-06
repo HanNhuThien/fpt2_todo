@@ -1,117 +1,67 @@
-import cz from "./TodoView.module.css";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
 import TodoList from "./TodoList";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AddTodo from "./AddTodo";
 import { isStringBlank } from "../utils/ValidateUtils";
+import cz from "./TodoView.module.css";
+import {
+  dbAddTodo,
+  dbDeleteTodo,
+  dbFetchTodos,
+  dbFilterTodos,
+  dbUpdateTodo,
+} from "../db/DataHelper_Todos";
 
-const DUMMY_TODO_LIST = [
-  {
-    id: 1,
-    title: "title 1 abc",
-    description: "description 1 123",
-    isDone: false,
-  },
-  {
-    id: 2,
-    title: "title 2 ab",
-    description: "description 2 23",
-    isDone: false,
-  },
-  {
-    id: 3,
-    title: "title 3 def",
-    description: "description 3 456",
-    isDone: false,
-  },
-  {
-    id: 4,
-    title: "title 4 gh",
-    description: "description 4 56",
-    isDone: false,
-  },
-];
-
-let MAX_ID = 4;
 function TodoView() {
   const [todoList, setTodoList] = useState([]);
-  const [filterTodoList, setFilterTodoList] = useState([]);
-  const [isFiltering, setIsFiltering] = useState(false);
   const [isAddingTodo, setIsAddingTodo] = useState(false);
 
+  const searchRef = useRef(null);
+
   useEffect(() => {
-    setTodoList(DUMMY_TODO_LIST);
+    dbFetchTodos((todos) => {
+      setTodoList(todos);
+    });
   }, []);
 
   useEffect(() => {
     console.log("todoList: ");
     console.log(todoList);
-    console.log("filterTodoList: ");
-    console.log(filterTodoList);
-  }, [todoList, filterTodoList]);
+  }, [todoList]);
+
+  const filterString = searchRef?.current?.value;
 
   const updateTodoFn = (updatedTodo) => {
-    setTodoList((prevState) => {
-      let updatedTodoList = [...prevState];
-      const updatedIndex = updatedTodoList.findIndex(
-        (e) => e.id === updatedTodo.id
-      );
-
-      if (updatedIndex === -1) {
-        console.log("updateTodoFn: updated index invalid");
-        return updatedTodoList;
-      }
-      updatedTodoList.splice(updatedIndex, 1, updatedTodo);
-      return updatedTodoList;
+    dbUpdateTodo(updatedTodo, filterString, (todos) => {
+      setTodoList(todos);
     });
   };
+
   const deleteTodoFn = (todoId) => {
-    setTodoList((prevState) => {
-      let updatedTodoList = [...prevState];
-      const updatedIndex = updatedTodoList.findIndex((e) => e.id === todoId);
-      if (updatedIndex === -1) {
-        console.log("deleteTodoFn: updated index invalid");
-        return updatedTodoList;
-      }
-      updatedTodoList.splice(updatedIndex, 1);
-      console.log(updatedTodoList);
-      return updatedTodoList;
+    dbDeleteTodo(todoId, filterString, (todos) => {
+      setTodoList(todos);
     });
   };
 
-  const addTodoFn = (updatedTodo) => {
-    if (!updatedTodo) {
-      console.log("addTodoFn: updatedTodo invalid");
-      return;
-    }
-    updatedTodo.id = ++MAX_ID;
-    setTodoList((prevState) => {
-      let updatedTodoList = [...prevState];
-      updatedTodoList.unshift(updatedTodo);
-      return updatedTodoList;
+  const addTodoFn = (newTodo) => {
+    dbAddTodo(newTodo, filterString, (todos) => {
+      setTodoList(todos);
     });
   };
 
   const filterTodoListFn = (keySearch) => {
-    if (isStringBlank(keySearch)) {
-      return todoList;
-    }
-    const newTodoList = todoList.filter(
-      (todo) =>
-        todo.title.includes(keySearch) || todo.description.includes(keySearch)
-    );
-    return newTodoList;
+    dbFilterTodos(keySearch, (filteredTodos) => {
+      setTodoList(filteredTodos);
+    });
   };
 
   const onSearch = (e) => {
     const keySearch = e.target.value;
     if (isStringBlank(keySearch)) {
-      setIsFiltering(false);
-      return;
+      // return;
     }
-    setIsFiltering(true);
-    setFilterTodoList(filterTodoListFn(keySearch));
+    filterTodoListFn(keySearch);
   };
 
   const onClickAddTodo = () => {
@@ -130,7 +80,11 @@ function TodoView() {
 
   return (
     <div className={cz.todoView}>
-      <Input placeholder="search by title / description" onChange={onSearch} />
+      <Input
+        placeholder="search by title / description"
+        onChange={onSearch}
+        ref={searchRef}
+      />
 
       {!isAddingTodo && (
         <Button className={cz.button_addTodo} onClick={onClickAddTodo}>
@@ -140,11 +94,10 @@ function TodoView() {
 
       {isAddingTodo && <AddTodo onAddTodo={onAddTodo} />}
 
-      {isFiltering && filterTodoList.length === 0 && P_NO_ITEM_FOUND}
-      {!isFiltering && todoList.length === 0 && P_NO_ITEM_FOUND}
+      {todoList?.length === 0 && P_NO_ITEM_FOUND}
 
       <TodoList
-        todoList={isFiltering ? filterTodoList : todoList}
+        todoList={todoList}
         onUpdateItem={updateTodoFn}
         onDeleteItem={deleteTodoFn}
       />
