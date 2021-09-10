@@ -1,3 +1,1 @@
-
-
-export const isStringBlank = (str) => str.trim().length === 0;
+export const isStringBlank = (str) => !str || str.trim().length === 0;
